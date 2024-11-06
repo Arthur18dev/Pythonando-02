@@ -61,9 +61,10 @@
                   <img class="aspect-[3/2] w-full rounded-2xl object-cover" src="{{i.foto.url}}" alt="">
                   
                   <h3 class="mt-2 text-lg font-semibold leading-8 text-gray-900">{{i.nome_presente}}</h3>
-                  
-                    <p class="mt-4 block text-sm leading-6 text-gray-900">Reservado por Caio Sampaio</p>
-                  
+
+                    {% if i.reservado %}
+                      <p class="mt-4 block text-sm leading-6 text-gray-900">Reservado por {{i.reservado_por}}</p>
+                    {% endif %}
                   <p class="text-base leading-7 text-gray-600"></p>
                   
                   {% if i.importancia <= 2 %}
@@ -104,7 +105,7 @@
             labels: ['Não reservado', 'Reservado'],
             datasets: [{
               label: 'Presentes',
-              data: [5, 6],
+              data: {{data}},
               borderWidth: 1
             }]
           },

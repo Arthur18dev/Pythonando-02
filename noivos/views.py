@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Presentes, Convidados
 
+
 # Create your views here.
 def home(request):
     if request.method == "GET":
         presentes = Presentes.objects.all()
-        return render(request, 'home.html', {'presentes': presentes})
+        nao_reservado = Presentes.objects.filter(reservado=False).count()
+        reservados = Presentes.objects.filter(reservado=True).count()
+        data = [nao_reservado, reservados]
+        return render(request, 'home.html', {'presentes': presentes, 'data': data})
     elif request.method == "POST":
         nome_presente = request.POST.get('nome_presente')
         preco = request.POST.get('preco')
@@ -31,7 +35,8 @@ def home(request):
     
 def lista_convidados(request):
         if request.method == "GET":
-             return render(request, 'lista_convidados.html')
+             convidados = Convidados.objects.all()
+             return render(request, 'lista_convidados.html', {'convidados': convidados})
         elif request.method == "POST":
              nome_convidado = request.POST.get('nome_convidado')
              whatsapp = request.POST.get('whatsapp')
